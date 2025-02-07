@@ -111,3 +111,4 @@ void mouseDragged() {
 //so i wanted the colors of the circles to reset only when the mouse is released.
 //aswell as like I wanted the red to start at one circle and to spread it to the other circles as they pass each other.
 //also meant to include a timer which like theoretically wouldve been easy but i left it for last and passed out :3
+// :3!!!!
