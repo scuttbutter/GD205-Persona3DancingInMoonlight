@@ -3,6 +3,7 @@
 //aswell as like I wanted the red to start at one circle and to spread it to the other circles as they pass each other.
 //also meant to include a timer which like theoretically wouldve been easy but i left it for last and passed out :3
 // :3!!!
+//did i remeber to commit??
 
 int numCircles = 5;
 float[] angles;
@@ -74,12 +75,6 @@ void draw() {
       lastTimeRed[i] = -1;
     }
 
-    if (lastTimeRed[i] != -1) {
-      // Calculate elapsed time in seconds
-      float elapsedTime = (millis() - lastTimeRed[i]) / 1000.0;
-      println("Circle " + i + " has been red for: " + elapsedTime + " seconds");
-    }
-
     for (int j = i + 1; j < numCircles; j++) {
       float dx = xPos[i] - xPos[j];
       float dy = yPos[i] - yPos[j];
@@ -106,6 +101,9 @@ void draw() {
 
   fill(255, 0, 0, 50);
   ellipse(mouseX, mouseY, resetRadius * 2, resetRadius * 2);
+
+  // Display timer in the bottom left corner
+  displayTimer();
 }
 
 void mousePressed() {
@@ -132,4 +130,18 @@ void mouseDragged() {
   if (isMousePressed) {
     resetRadius += 1;
   }
+}
+
+// Function to display timer in the bottom left corner
+void displayTimer() {
+  float totalTime = 0;
+  for (int i = 0; i < numCircles; i++) {
+    if (lastTimeRed[i] != -1) {
+      // If the circle is red, calculate the time it has been red
+      totalTime += (millis() - lastTimeRed[i]) / 1000.0;
+    }
+  }
+  fill(255);
+  textSize(16);
+  text("Total time circles red: " + totalTime + " s", 20, height - 20);
 }
