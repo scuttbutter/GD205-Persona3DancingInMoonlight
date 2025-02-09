@@ -1,3 +1,9 @@
+
+//so i wanted the colors of the circles to reset only when the mouse is released.
+//aswell as like I wanted the red to start at one circle and to spread it to the other circles as they pass each other.
+//also meant to include a timer which like theoretically wouldve been easy but i left it for last and passed out :3
+// :3!!!
+
 int numCircles = 5;
 float[] angles;
 float[] speeds;
@@ -7,6 +13,7 @@ float[] vy;
 float[] xPos;
 float[] yPos;
 float[] colorProgress;
+float[] lastTimeRed;
 float circleSize = 50;
 float resetRadius = 0;
 boolean isMousePressed = false;
@@ -23,6 +30,7 @@ void setup() {
   xPos = new float[numCircles];
   yPos = new float[numCircles];
   colorProgress = new float[numCircles];
+  lastTimeRed = new float[numCircles];
 
   for (int i = 0; i < numCircles; i++) {
     angles[i] = random(TWO_PI);
@@ -31,14 +39,15 @@ void setup() {
     vx[i] = cos(angles[i]) * speeds[i];
     vy[i] = sin(angles[i]) * speeds[i];
     colorProgress[i] = 0;
+    lastTimeRed[i] = -1;  // Initialize to an invalid time value.
   }
 }
 
 void draw() {
   background(35);
+  
   for (int i = 0; i < numCircles; i++) {
     colorProgress[i] = min(colorProgress[i] + 0.002, 1);
-
     float adjustedSpeed = map(colorProgress[i], 0, 1, 0.05, 0.01);
 
     vx[i] = cos(angles[i]) * adjustedSpeed;
@@ -54,6 +63,22 @@ void draw() {
 
     fill(c);
     ellipse(x, y, circleSize, circleSize);
+
+    // Timer logic
+    if (colorProgress[i] == 1 && lastTimeRed[i] == -1) {
+      // Start timer when it turns red
+      lastTimeRed[i] = millis();
+    }
+    if (colorProgress[i] == 0) {
+      // Reset timer when it turns white
+      lastTimeRed[i] = -1;
+    }
+
+    if (lastTimeRed[i] != -1) {
+      // Calculate elapsed time in seconds
+      float elapsedTime = (millis() - lastTimeRed[i]) / 1000.0;
+      println("Circle " + i + " has been red for: " + elapsedTime + " seconds");
+    }
 
     for (int j = i + 1; j < numCircles; j++) {
       float dx = xPos[i] - xPos[j];
@@ -108,7 +133,3 @@ void mouseDragged() {
     resetRadius += 1;
   }
 }
-//so i wanted the colors of the circles to reset only when the mouse is released.
-//aswell as like I wanted the red to start at one circle and to spread it to the other circles as they pass each other.
-//also meant to include a timer which like theoretically wouldve been easy but i left it for last and passed out :3
-// :3!!!!
