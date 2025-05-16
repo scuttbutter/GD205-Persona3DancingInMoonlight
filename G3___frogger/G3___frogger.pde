@@ -61,8 +61,6 @@ class Player {
             py < car.y + car.h && py + size > car.y);
   }
 }
-
-// === CAR CLASS ===
 class Car {
   float x, y, speed;
   float w, h;
@@ -132,16 +130,16 @@ class GameController {
   }
 
   void draw() {
-    background(51);
+    background(#86c7e3);
 
-    // Draw grid (optional)
-    stroke(80);
-    for (int i = 0; i < cols; i++) {
-      line(i * tileSize, 0, i * tileSize, height);
-    }
-    for (int j = 0; j < rows; j++) {
-      line(0, j * tileSize, width, j * tileSize);
-    }
+//    // Draw grid (optional)
+//    stroke(80);
+//    for (int i = 0; i < cols; i++) {
+//      line(i * tileSize, 0, i * tileSize, height);
+//    }
+//    for (int j = 0; j < rows; j++) {
+//      line(0, j * tileSize, width, j * tileSize);
+//    }
 
     // Draw goal tile
     noStroke();
@@ -170,8 +168,6 @@ class GameController {
     player.display();
   }
 }
-
-// === GLOBALS ===
 GameController controller;
 HashMap<Integer, Command> keyCommands;
 
